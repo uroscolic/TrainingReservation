@@ -35,8 +35,8 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
-    private String surname;
+    private String firstName;
+    private String lastName;
     private String username;
     private String password;
     private String email;
@@ -44,10 +44,10 @@ public class User {
     @ManyToOne(optional = false)
     private Role role;
 
-    public User(Long id, String name, String surname, String username, String password, String email, LocalDate dateOfBirth, Role role) {
+    public User(Long id, String firstName, String lastName, String username, String password, String email, LocalDate dateOfBirth, Role role) {
         this.id = id;
-        this.name = name;
-        this.surname = surname;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.username = username;
         this.password = password;
         this.email = email;
