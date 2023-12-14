@@ -1,4 +1,6 @@
 package com.example.reservation.service.impl;
 
-public class ClientServiceImpl {
+import com.example.reservation.service.ClientService;
+
+public class ClientServiceImpl implements ClientService {
 }

@@ -1,4 +1,4 @@
 package com.example.reservation.service;
 
-public class ManagerService {
+public interface ManagerService {
 }

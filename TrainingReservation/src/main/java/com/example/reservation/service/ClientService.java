@@ -1,4 +1,4 @@
 package com.example.reservation.service;
 
-public class ClientService {
+public interface ClientService {
 }
