@@ -13,6 +13,8 @@ public class UserDto {
     private String lastName;
     private String username;
 
+    public UserDto() {
+    }
     public UserDto(String firstName, String lastName, String username, String password, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
