@@ -1,5 +1,4 @@
 package com.example.reservation.domain;
-
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import lombok.Getter;
@@ -15,10 +14,6 @@ public class Manager extends User{
     private String nameOfGym;
     private LocalDate dateOfEmployment;
     private boolean isBlocked;
-
-    public Manager() {
-        super();
-    }
 
     public Manager(Long id, String name, String surname, String username, String password, String email, LocalDate dateOfBirth, Role role, String nameOfGym, LocalDate dateOfEmployment) {
         super(id, name, surname, username, password, email, dateOfBirth, role);
