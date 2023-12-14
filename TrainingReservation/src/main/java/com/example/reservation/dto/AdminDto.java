@@ -7,6 +7,9 @@ import lombok.Setter;
 @Setter
 public class AdminDto extends UserDto{
 
+    public AdminDto() {
+        super();
+    }
     public AdminDto(String firstName, String lastName, String username, String password, String email) {
         super(firstName, lastName, username, password, email);
     }

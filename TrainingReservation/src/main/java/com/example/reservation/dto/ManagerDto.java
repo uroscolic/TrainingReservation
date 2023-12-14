@@ -8,6 +8,9 @@ import lombok.Setter;
 public class ManagerDto extends UserDto{
     private String nameOfGym;
 
+    public ManagerDto() {
+        super();
+    }
     public ManagerDto(String nameOfGym, String firstName, String lastName, String username, String password, String email) {
         super(firstName, lastName, username, password, email);
         this.nameOfGym = nameOfGym;
