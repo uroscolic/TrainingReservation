@@ -1,14 +1,47 @@
 package com.example.reservation.mapper;
 
 import com.example.reservation.domain.Client;
+import com.example.reservation.domain.RoleType;
+import com.example.reservation.dto.ClientCreateDto;
 import com.example.reservation.dto.ClientDto;
+import com.example.reservation.repository.RoleRepository;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ClientMapper {
 
-    public ClientDto ClientToClientDto(Client client)
+    private static long number = 0;
+    private RoleRepository roleRepository;
+
+    public ClientMapper(RoleRepository roleRepository) {
+        this.roleRepository = roleRepository;
+    }
+
+    public ClientDto clientToClientDto(Client client)
     {
-        /*ClientDto clientDto = new ClientDto();*/
-        return null;
+        ClientDto clientDto = new ClientDto();
+        clientDto.setFirstName(client.getFirstName());
+        clientDto.setLastName(client.getLastName());
+        clientDto.setUsername(client.getUsername());
+        clientDto.setEmail(client.getEmail());
+        clientDto.setId(client.getId());
+        return clientDto;
+    }
+
+    public Client clientCreateDtoToClient(ClientCreateDto clientCreateDto)
+    {
+        Client client = new Client();
+        client.setFirstName(clientCreateDto.getFirstName());
+        client.setLastName(clientCreateDto.getLastName());
+        client.setUsername(clientCreateDto.getUsername());
+        client.setEmail(clientCreateDto.getEmail());
+        client.setPassword(clientCreateDto.getPassword());
+        client.setRole(roleRepository.findRoleByRoleType(RoleType.ROLE_CLIENT).get());
+        client.setBlocked(false);
+        client.setNumberOfTrainings(0);
+        client.setCardNumber(++number);
+
+        return client;
     }
 
 }

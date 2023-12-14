@@ -7,8 +7,8 @@ import lombok.Setter;
 import java.time.LocalDate;
 @Getter
 @Setter
-@MappedSuperclass
 @Entity
+@Table(name = "useraccount")
 @Inheritance (strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn (discriminatorType = DiscriminatorType.STRING,
 name = "UserType")

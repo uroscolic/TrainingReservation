@@ -7,8 +7,6 @@ import org.springframework.data.domain.Pageable;
 
 public class UserServiceImpl implements UserService {
 
-
-
     @Override
     public Page<UserDto> findAll(Pageable pageable) {
         return null;
