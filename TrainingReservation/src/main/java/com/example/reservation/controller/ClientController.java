@@ -21,7 +21,7 @@ public class ClientController {
         this.clientService = clientService;
     }
     @GetMapping
-    public ResponseEntity<Page<ClientDto>> getAllUsers(String authorization,
+    public ResponseEntity<Page<ClientDto>> getAllClients(String authorization,
                                                        Pageable pageable) {
 
         return new ResponseEntity<>(clientService.findAll(pageable), HttpStatus.OK);
