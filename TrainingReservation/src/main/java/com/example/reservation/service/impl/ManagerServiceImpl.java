@@ -3,6 +3,8 @@ package com.example.reservation.service.impl;
 import com.example.reservation.domain.Manager;
 import com.example.reservation.dto.ManagerCreateDto;
 import com.example.reservation.dto.ManagerDto;
+import com.example.reservation.dto.TokenRequestDto;
+import com.example.reservation.dto.TokenResponseDto;
 import com.example.reservation.mapper.ManagerMapper;
 import com.example.reservation.repository.ManagerRepository;
 import com.example.reservation.service.ManagerService;
@@ -34,6 +36,11 @@ public class ManagerServiceImpl implements ManagerService {
         Manager manager = managerMapper.managerCreateDtoToManager(managerCreateDto);
         managerRepository.save(manager);
         return managerMapper.managerToManagerDto(manager);
+    }
+
+    @Override
+    public TokenResponseDto login(TokenRequestDto tokenRequestDto) {
+        return null;
     }
 
 }

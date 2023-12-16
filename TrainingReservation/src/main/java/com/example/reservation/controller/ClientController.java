@@ -2,8 +2,8 @@ package com.example.reservation.controller;
 
 import com.example.reservation.dto.ClientCreateDto;
 import com.example.reservation.dto.ClientDto;
+import com.example.reservation.dto.ClientUpdateDto;
 import com.example.reservation.service.ClientService;
-import io.swagger.annotations.ApiOperation;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,13 +23,18 @@ public class ClientController {
     @GetMapping
     public ResponseEntity<Page<ClientDto>> getAllClients(String authorization,
                                                        Pageable pageable) {
-
         return new ResponseEntity<>(clientService.findAll(pageable), HttpStatus.OK);
     }
 
-    @ApiOperation(value = "Register client")
+
     @PostMapping
     public ResponseEntity<ClientDto> saveClient(@RequestBody ClientCreateDto clientCreateDto) {
         return new ResponseEntity<>(clientService.register(clientCreateDto), HttpStatus.CREATED);
+    }
+
+    //TODO: add admin check
+    @PutMapping
+    public ResponseEntity<ClientDto> updateClient(@RequestBody ClientUpdateDto clientUpdateDto) {
+        return new ResponseEntity<>(clientService.update(clientUpdateDto,false), HttpStatus.OK);
     }
 }

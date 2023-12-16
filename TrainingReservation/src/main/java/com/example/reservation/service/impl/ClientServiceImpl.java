@@ -1,8 +1,7 @@
 package com.example.reservation.service.impl;
 
 import com.example.reservation.domain.Client;
-import com.example.reservation.dto.ClientCreateDto;
-import com.example.reservation.dto.ClientDto;
+import com.example.reservation.dto.*;
 import com.example.reservation.mapper.ClientMapper;
 import com.example.reservation.repository.ClientRepository;
 import com.example.reservation.service.ClientService;
@@ -34,5 +33,18 @@ public class ClientServiceImpl implements ClientService {
         Client client = clientMapper.clientCreateDtoToClient(clientCreateDto);
         clientRepository.save(client);
         return clientMapper.clientToClientDto(client);
+    }
+
+    @Override
+    public ClientDto update(ClientUpdateDto clientUpdateDto, boolean isAdmin) {
+        Client client = clientRepository.findByUsername(clientUpdateDto.getOldUsername()).orElseThrow(() -> new RuntimeException("Client not found"));
+        client = clientMapper.clientUpdateDtoToClient(client, clientUpdateDto, isAdmin);
+        clientRepository.save(client);
+        return clientMapper.clientToClientDto(client);
+    }
+
+    @Override
+    public TokenResponseDto login(TokenRequestDto tokenRequestDto) {
+        return null;
     }
 }

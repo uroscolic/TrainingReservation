@@ -1,7 +1,6 @@
 package com.example.reservation.controller;
 
 import com.example.reservation.dto.AdminDto;
-import com.example.reservation.dto.ManagerDto;
 import com.example.reservation.service.AdminService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

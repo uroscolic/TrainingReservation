@@ -2,6 +2,8 @@ package com.example.reservation.service.impl;
 
 import com.example.reservation.dto.AdminCreateDto;
 import com.example.reservation.dto.AdminDto;
+import com.example.reservation.dto.TokenRequestDto;
+import com.example.reservation.dto.TokenResponseDto;
 import com.example.reservation.mapper.AdminMapper;
 import com.example.reservation.repository.AdminRepository;
 import com.example.reservation.service.AdminService;
@@ -24,9 +26,12 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public Page<AdminDto> findAll(Pageable pageable) {
-
-
         return adminRepository.findAll(pageable).map(adminMapper::adminToAdminDto);
+    }
+
+    @Override
+    public TokenResponseDto login(TokenRequestDto tokenRequestDto) {
+        return null;
     }
 
 

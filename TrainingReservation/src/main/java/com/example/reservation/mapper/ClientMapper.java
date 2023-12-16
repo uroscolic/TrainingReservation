@@ -4,6 +4,7 @@ import com.example.reservation.domain.Client;
 import com.example.reservation.domain.RoleType;
 import com.example.reservation.dto.ClientCreateDto;
 import com.example.reservation.dto.ClientDto;
+import com.example.reservation.dto.ClientUpdateDto;
 import com.example.reservation.repository.RoleRepository;
 import org.springframework.stereotype.Component;
 
@@ -41,6 +42,24 @@ public class ClientMapper {
         client.setNumberOfTrainings(0);
         client.setCardNumber(++number);
 
+        return client;
+    }
+
+
+    public Client clientUpdateDtoToClient(Client client, ClientUpdateDto clientUpdateDto, boolean isAdmin)
+    {
+        if(clientUpdateDto.getFirstName() != null)
+            client.setFirstName(clientUpdateDto.getFirstName());
+        if(clientUpdateDto.getLastName() != null)
+            client.setLastName(clientUpdateDto.getLastName());
+        if(clientUpdateDto.getUsername() != null)
+            client.setUsername(clientUpdateDto.getUsername());
+        if(clientUpdateDto.getEmail() != null)
+            client.setEmail(clientUpdateDto.getEmail());
+        if(clientUpdateDto.getPassword() != null)
+            client.setPassword(clientUpdateDto.getPassword());
+        if(isAdmin)
+            client.setBlocked(clientUpdateDto.isBlocked());
         return client;
     }
 
