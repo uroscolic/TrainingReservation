@@ -2,8 +2,6 @@ package com.example.reservation.mapper;
 
 import com.example.reservation.domain.Manager;
 import com.example.reservation.domain.RoleType;
-import com.example.reservation.dto.ClientCreateDto;
-import com.example.reservation.dto.ClientDto;
 import com.example.reservation.dto.ManagerCreateDto;
 import com.example.reservation.dto.ManagerDto;
 import com.example.reservation.repository.RoleRepository;

@@ -1,10 +1,7 @@
 package com.example.reservation.runner;
 
 import com.example.reservation.domain.*;
-import com.example.reservation.repository.AdminRepository;
-import com.example.reservation.repository.ClientRepository;
-import com.example.reservation.repository.ManagerRepository;
-import com.example.reservation.repository.RoleRepository;
+import com.example.reservation.repository.*;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 
@@ -17,9 +14,7 @@ import org.springframework.stereotype.Component;
 public class TestDataRunner implements CommandLineRunner {
 
     private RoleRepository roleRepository;
-    private AdminRepository adminRepository;
-    private ClientRepository clientRepository;
-    private ManagerRepository managerRepository;
+    private UserRepository userRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -37,7 +32,7 @@ public class TestDataRunner implements CommandLineRunner {
         admin.setEmail("dusan@uros.com");
         admin.setPassword("1114");
         admin.setRole(adminRole);
-        adminRepository.save(admin);
+        userRepository.save(admin);
 
         Admin admin1 = new Admin();
         admin1.setFirstName("Uros");
@@ -46,7 +41,7 @@ public class TestDataRunner implements CommandLineRunner {
         admin1.setEmail("uros@dusan.com");
         admin1.setPassword("1144");
         admin1.setRole(adminRole);
-        adminRepository.save(admin1);
+        userRepository.save(admin1);
 
         Client client = new Client();
         client.setFirstName("Violeta");
@@ -58,7 +53,8 @@ public class TestDataRunner implements CommandLineRunner {
         client.setCardNumber(123456789L);
         client.setNumberOfTrainings(0);
         client.setBlocked(false);
-        clientRepository.save(client);
+        client.setActivated(true);
+        userRepository.save(client);
 
         Manager manager = new Manager();
         manager.setFirstName("Milisav");
@@ -70,7 +66,8 @@ public class TestDataRunner implements CommandLineRunner {
         manager.setBlocked(false);
         manager.setNameOfGym("Gym1");
         manager.setDateOfEmployment(java.time.LocalDate.now());
-        managerRepository.save(manager);
+        manager.setActivated(true);
+        userRepository.save(manager);
 
     }
 }

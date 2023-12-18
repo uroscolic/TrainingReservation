@@ -14,6 +14,7 @@ public class Manager extends User{
     private String nameOfGym;
     private LocalDate dateOfEmployment;
     private boolean isBlocked;
+    private boolean isActivated;
 
     public Manager() {
         super();
@@ -23,5 +24,6 @@ public class Manager extends User{
         this.nameOfGym = nameOfGym;
         this.dateOfEmployment = dateOfEmployment;
         this.isBlocked = false;
+        this.isActivated = false;
     }
 }
