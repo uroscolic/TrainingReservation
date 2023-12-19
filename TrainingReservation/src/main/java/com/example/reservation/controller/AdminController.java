@@ -26,4 +26,11 @@ public class AdminController {
 
         return new ResponseEntity<>(userService.findAllOfRole(pageable, RoleType.ROLE_ADMIN), HttpStatus.OK);
     }
+    @GetMapping("/all-users")
+    public ResponseEntity<Page<UserDto>> getAllUsers(String authorization,
+                                                      Pageable pageable) {
+
+        return new ResponseEntity<>(userService.findAll(pageable), HttpStatus.OK);
+    }
+
 }
