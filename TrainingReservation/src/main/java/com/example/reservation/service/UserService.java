@@ -11,8 +11,8 @@ public interface UserService {
     Page<UserDto> findAllOfRole(Pageable pageable, RoleType roleType);
     ClientDto registerClient(ClientCreateDto clientDto);
     ManagerDto registerManager(ManagerCreateDto managerDto);
-    ClientDto updateClient(ClientUpdateDto clientUpdateDto, boolean isAdmin);
-    ManagerDto updateManager(ManagerUpdateDto managerUpdateDto, boolean isAdmin);
+    ClientDto updateClient(ClientUpdateDto clientUpdateDto);
+    ManagerDto updateManager(ManagerUpdateDto managerUpdateDto);
     ClientDto banClient(ClientBanDto clientBanDto);
-
+    ManagerDto banManager(ManagerBanDto managerBanDto);
 }

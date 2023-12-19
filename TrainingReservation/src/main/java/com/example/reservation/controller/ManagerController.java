@@ -29,6 +29,11 @@ public class ManagerController {
     }
     @PutMapping("/modify")
     public ResponseEntity<ManagerDto> updateManager(@RequestBody ManagerUpdateDto managerUpdateDto) {
-        return new ResponseEntity<>(userService.updateManager(managerUpdateDto,false), HttpStatus.OK);
+        return new ResponseEntity<>(userService.updateManager(managerUpdateDto), HttpStatus.OK);
     }
+    @PutMapping("/ban")
+    public ResponseEntity<ManagerDto> banManager(@RequestBody ManagerBanDto managerBanDto) {
+        return new ResponseEntity<>(userService.banManager(managerBanDto), HttpStatus.OK);
+    }
+
 }

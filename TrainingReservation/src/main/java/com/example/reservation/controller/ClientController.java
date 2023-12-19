@@ -36,7 +36,7 @@ public class ClientController {
     //TODO: add admin check
     @PutMapping("/modify")
     public ResponseEntity<ClientDto> updateClient(@RequestBody ClientUpdateDto clientUpdateDto) {
-        return new ResponseEntity<>(userService.updateClient(clientUpdateDto,false), HttpStatus.OK);
+        return new ResponseEntity<>(userService.updateClient(clientUpdateDto), HttpStatus.OK);
     }
     @PutMapping("/ban")
     public ResponseEntity<ClientDto> banClient(@RequestBody ClientBanDto clientBanDto) {

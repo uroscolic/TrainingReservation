@@ -3,10 +3,7 @@ package com.example.reservation.mapper;
 import com.example.reservation.domain.Client;
 import com.example.reservation.domain.Manager;
 import com.example.reservation.domain.RoleType;
-import com.example.reservation.dto.ClientUpdateDto;
-import com.example.reservation.dto.ManagerCreateDto;
-import com.example.reservation.dto.ManagerDto;
-import com.example.reservation.dto.ManagerUpdateDto;
+import com.example.reservation.dto.*;
 import com.example.reservation.repository.RoleRepository;
 import org.springframework.stereotype.Component;
 
@@ -45,7 +42,7 @@ public class ManagerMapper {
         return manager;
     }
 
-    public Manager managerUpdateDtoToManager(Manager manager, ManagerUpdateDto managerUpdateDto, boolean isAdmin)
+    public Manager managerUpdateDtoToManager(Manager manager, ManagerUpdateDto managerUpdateDto)
     {
         if(managerUpdateDto.getFirstName() != null)
             manager.setFirstName(managerUpdateDto.getFirstName());
@@ -57,9 +54,11 @@ public class ManagerMapper {
             manager.setEmail(managerUpdateDto.getEmail());
         if(managerUpdateDto.getPassword() != null)
             manager.setPassword(managerUpdateDto.getPassword());
-        if(isAdmin)
-            manager.setBlocked(managerUpdateDto.isBlocked());
         return manager;
     }
-
+    public Manager managerBanDtoToManager(Manager manager, ManagerBanDto managerBanDto)
+    {
+        manager.setBlocked(managerBanDto.isBlocked());
+        return manager;
+    }
 }

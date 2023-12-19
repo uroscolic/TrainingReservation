@@ -47,7 +47,7 @@ public class ClientMapper {
     }
 
 
-    public Client clientUpdateDtoToClient(Client client, ClientUpdateDto clientUpdateDto, boolean isAdmin)
+    public Client clientUpdateDtoToClient(Client client, ClientUpdateDto clientUpdateDto)
     {
         if(clientUpdateDto.getFirstName() != null)
             client.setFirstName(clientUpdateDto.getFirstName());
@@ -59,8 +59,6 @@ public class ClientMapper {
             client.setEmail(clientUpdateDto.getEmail());
         if(clientUpdateDto.getPassword() != null)
             client.setPassword(clientUpdateDto.getPassword());
-        if(isAdmin)
-            client.setBlocked(clientUpdateDto.isBlocked());
         return client;
     }
     public Client clientBanDtoToClient(Client client, ClientBanDto clientBanDto)

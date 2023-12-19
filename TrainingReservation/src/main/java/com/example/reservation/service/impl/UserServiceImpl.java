@@ -60,10 +60,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ClientDto updateClient(ClientUpdateDto clientUpdateDto, boolean isAdmin) {
+    public ClientDto updateClient(ClientUpdateDto clientUpdateDto) {
         User user = userRepository.findByUsername(clientUpdateDto.getOldUsername()).orElseThrow(() -> new RuntimeException("Client not found"));
         if(user instanceof Client client){
-            client = clientMapper.clientUpdateDtoToClient( client, clientUpdateDto,false);
+            client = clientMapper.clientUpdateDtoToClient(client, clientUpdateDto);
             userRepository.save(client);
             return clientMapper.clientToClientDto(client);
         }
@@ -71,10 +71,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ManagerDto updateManager(ManagerUpdateDto managerUpdateDto, boolean isAdmin) {
+    public ManagerDto updateManager(ManagerUpdateDto managerUpdateDto) {
         User user = userRepository.findByUsername(managerUpdateDto.getOldUsername()).orElseThrow(() -> new RuntimeException("Manager not found"));
         if(user instanceof Manager manager){
-            manager = managerMapper.managerUpdateDtoToManager(manager, managerUpdateDto,true);
+            manager = managerMapper.managerUpdateDtoToManager(manager, managerUpdateDto);
             userRepository.save(manager);
             return managerMapper.managerToManagerDto(manager);
         }
@@ -90,6 +90,17 @@ public class UserServiceImpl implements UserService {
             return clientMapper.clientToClientDto(client);
         }
         throw new RuntimeException("Client not found");
+    }
+
+    @Override
+    public ManagerDto banManager(ManagerBanDto managerBanDto) {
+        User user = userRepository.findByUsername(managerBanDto.getUsername()).orElseThrow(() -> new RuntimeException("Manager not found"));
+        if(user instanceof Manager manager){
+            manager = managerMapper.managerBanDtoToManager(manager, managerBanDto);
+            userRepository.save(manager);
+            return managerMapper.managerToManagerDto(manager);
+        }
+        throw new RuntimeException("Manager not found");
     }
 
 
