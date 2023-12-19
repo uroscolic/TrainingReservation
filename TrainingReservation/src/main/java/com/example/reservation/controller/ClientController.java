@@ -1,10 +1,7 @@
 package com.example.reservation.controller;
 
 import com.example.reservation.domain.RoleType;
-import com.example.reservation.dto.ClientCreateDto;
-import com.example.reservation.dto.ClientDto;
-import com.example.reservation.dto.ClientUpdateDto;
-import com.example.reservation.dto.UserDto;
+import com.example.reservation.dto.*;
 import com.example.reservation.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -40,5 +37,9 @@ public class ClientController {
     @PutMapping("/modify")
     public ResponseEntity<ClientDto> updateClient(@RequestBody ClientUpdateDto clientUpdateDto) {
         return new ResponseEntity<>(userService.updateClient(clientUpdateDto,false), HttpStatus.OK);
+    }
+    @PutMapping("/ban")
+    public ResponseEntity<ClientDto> banClient(@RequestBody ClientBanDto clientBanDto) {
+        return new ResponseEntity<>(userService.banClient(clientBanDto), HttpStatus.OK);
     }
 }

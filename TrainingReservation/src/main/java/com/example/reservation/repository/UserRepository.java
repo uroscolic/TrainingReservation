@@ -11,10 +11,9 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query("SELECT u FROM User u WHERE u.role.roleType = ?1")
-    Page<User> findByUserType(RoleType roleType, Pageable pageable);
+    Page<User> findByRoleType(RoleType roleType, Pageable pageable);
     Optional<User> findByUsername(String username);
-
-    Optional<User> findByUsernameAndPassword(String username, String password);
+    Optional<User> findByEmailAndPassword(String email, String password);
 
 
 

@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Page<UserDto> findAllOfRole(Pageable pageable, RoleType roleType) {
 
-        return userRepository.findByUserType(roleType,pageable).map(userMapper::userToUserDto);
+        return userRepository.findByRoleType(roleType,pageable).map(userMapper::userToUserDto);
 
     }
 
@@ -74,11 +74,22 @@ public class UserServiceImpl implements UserService {
     public ManagerDto updateManager(ManagerUpdateDto managerUpdateDto, boolean isAdmin) {
         User user = userRepository.findByUsername(managerUpdateDto.getOldUsername()).orElseThrow(() -> new RuntimeException("Manager not found"));
         if(user instanceof Manager manager){
-            manager = managerMapper.managerUpdateDtoToManager(manager, managerUpdateDto,false);
+            manager = managerMapper.managerUpdateDtoToManager(manager, managerUpdateDto,true);
             userRepository.save(manager);
             return managerMapper.managerToManagerDto(manager);
         }
         throw new RuntimeException("Manager not found");
+    }
+
+    @Override
+    public ClientDto banClient(ClientBanDto clientBanDto) {
+        User user = userRepository.findByUsername(clientBanDto.getUsername()).orElseThrow(() -> new RuntimeException("Client not found"));
+        if(user instanceof Client client){
+            client = clientMapper.clientBanDtoToClient(client, clientBanDto);
+            userRepository.save(client);
+            return clientMapper.clientToClientDto(client);
+        }
+        throw new RuntimeException("Client not found");
     }
 
 

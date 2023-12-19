@@ -2,6 +2,7 @@ package com.example.reservation.mapper;
 
 import com.example.reservation.domain.Client;
 import com.example.reservation.domain.RoleType;
+import com.example.reservation.dto.ClientBanDto;
 import com.example.reservation.dto.ClientCreateDto;
 import com.example.reservation.dto.ClientDto;
 import com.example.reservation.dto.ClientUpdateDto;
@@ -60,6 +61,11 @@ public class ClientMapper {
             client.setPassword(clientUpdateDto.getPassword());
         if(isAdmin)
             client.setBlocked(clientUpdateDto.isBlocked());
+        return client;
+    }
+    public Client clientBanDtoToClient(Client client, ClientBanDto clientBanDto)
+    {
+        client.setBlocked(clientBanDto.isBlocked());
         return client;
     }
 
