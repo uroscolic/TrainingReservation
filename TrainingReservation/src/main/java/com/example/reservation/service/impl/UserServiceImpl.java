@@ -2,6 +2,7 @@ package com.example.reservation.service.impl;
 
 import com.example.reservation.domain.Client;
 import com.example.reservation.domain.Manager;
+import com.example.reservation.domain.RoleType;
 import com.example.reservation.domain.User;
 import com.example.reservation.dto.*;
 import com.example.reservation.mapper.AdminMapper;
@@ -36,19 +37,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Page<ClientDto> findAllClients(Pageable pageable) {
-        return null;
+    public Page<UserDto> findAllOfRole(Pageable pageable, RoleType roleType) {
 
-    }
+        return userRepository.findByUserType(roleType,pageable).map(userMapper::userToUserDto);
 
-    @Override
-    public Page<ManagerDto> findAllManagers(Pageable pageable) {
-        return null;
-    }
-
-    @Override
-    public Page<AdminDto> findAllAdmins(Pageable pageable) {
-        return null;
     }
 
     @Override

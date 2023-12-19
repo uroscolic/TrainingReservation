@@ -1,6 +1,8 @@
 package com.example.reservation.controller;
 
+import com.example.reservation.domain.RoleType;
 import com.example.reservation.dto.AdminDto;
+import com.example.reservation.dto.UserDto;
 import com.example.reservation.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -19,9 +21,9 @@ public class AdminController {
 
     // TODO dodati check security
     @GetMapping
-    public ResponseEntity<Page<AdminDto>> getAllAdmins(String authorization,
-                                                       Pageable pageable) {
+    public ResponseEntity<Page<UserDto>> getAllAdmins(String authorization,
+                                                      Pageable pageable) {
 
-        return new ResponseEntity<>(userService.findAllAdmins(pageable), HttpStatus.OK);
+        return new ResponseEntity<>(userService.findAllOfRole(pageable, RoleType.ROLE_ADMIN), HttpStatus.OK);
     }
 }

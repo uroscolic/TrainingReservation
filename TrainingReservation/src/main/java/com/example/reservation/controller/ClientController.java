@@ -1,8 +1,10 @@
 package com.example.reservation.controller;
 
+import com.example.reservation.domain.RoleType;
 import com.example.reservation.dto.ClientCreateDto;
 import com.example.reservation.dto.ClientDto;
 import com.example.reservation.dto.ClientUpdateDto;
+import com.example.reservation.dto.UserDto;
 import com.example.reservation.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -22,11 +24,10 @@ public class ClientController {
 
     // TODO: authorization
 
-    // TODO: findAllByType pa da se prosledi client, da bi se dobili samo clienti is UserService-a
     @GetMapping
-    public ResponseEntity<Page<ClientDto>> getAllClients(String authorization,
+    public ResponseEntity<Page<UserDto>> getAllClients(String authorization,
                                                        Pageable pageable) {
-        return new ResponseEntity<>(userService.findAllClients(pageable), HttpStatus.OK);
+        return new ResponseEntity<>(userService.findAllOfRole(pageable, RoleType.ROLE_CLIENT), HttpStatus.OK);
     }
 
 

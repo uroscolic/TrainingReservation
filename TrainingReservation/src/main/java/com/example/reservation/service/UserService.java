@@ -1,5 +1,6 @@
 package com.example.reservation.service;
 
+import com.example.reservation.domain.RoleType;
 import com.example.reservation.dto.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -7,10 +8,7 @@ import org.springframework.data.domain.Pageable;
 public interface UserService {
 
     Page<UserDto> findAll(Pageable pageable);
-    Page<ClientDto> findAllClients(Pageable pageable);
-    Page<ManagerDto> findAllManagers(Pageable pageable);
-
-    Page<AdminDto> findAllAdmins(Pageable pageable);
+    Page<UserDto> findAllOfRole(Pageable pageable, RoleType roleType);
 
     ClientDto registerClient(ClientCreateDto clientDto);
     ManagerDto registerManager(ManagerCreateDto managerDto);

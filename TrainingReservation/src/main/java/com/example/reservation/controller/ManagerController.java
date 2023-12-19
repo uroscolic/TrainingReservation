@@ -1,5 +1,6 @@
 package com.example.reservation.controller;
 
+import com.example.reservation.domain.RoleType;
 import com.example.reservation.dto.*;
 import com.example.reservation.service.UserService;
 import lombok.AllArgsConstructor;
@@ -15,13 +16,11 @@ import org.springframework.web.bind.annotation.*;
 public class ManagerController {
     private UserService userService;
 
-    // TODO: manager update
-
     @GetMapping
-    public ResponseEntity<Page<ManagerDto>> getAllManagers(String authorization,
+    public ResponseEntity<Page<UserDto>> getAllManagers(String authorization,
                                                         Pageable pageable) {
 
-        return new ResponseEntity<>(userService.findAllManagers(pageable), HttpStatus.OK);
+        return new ResponseEntity<>(userService.findAllOfRole(pageable, RoleType.ROLE_MANAGER), HttpStatus.OK);
     }
 
     @PostMapping("/register")
