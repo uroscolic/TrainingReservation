@@ -15,7 +15,6 @@ public interface UserService {
     ClientDto registerClient(ClientCreateDto clientDto);
     ManagerDto registerManager(ManagerCreateDto managerDto);
     ClientDto updateClient(ClientUpdateDto clientUpdateDto, boolean isAdmin);
-    //TODO updateManager
-    //ManagerDto updateManager(ManagerUpdateDto managerUpdateDto, boolean isAdmin);
+    ManagerDto updateManager(ManagerUpdateDto managerUpdateDto, boolean isAdmin);
 
 }

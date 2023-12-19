@@ -1,7 +1,6 @@
 package com.example.reservation.controller;
 
-import com.example.reservation.dto.ManagerCreateDto;
-import com.example.reservation.dto.ManagerDto;
+import com.example.reservation.dto.*;
 import com.example.reservation.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -28,5 +27,9 @@ public class ManagerController {
     @PostMapping("/register")
     public ResponseEntity<ManagerDto> saveManager(@RequestBody ManagerCreateDto managerCreateDto) {
         return new ResponseEntity<>(userService.registerManager(managerCreateDto), HttpStatus.CREATED);
+    }
+    @PutMapping("/modify")
+    public ResponseEntity<ManagerDto> updateManager(@RequestBody ManagerUpdateDto managerUpdateDto) {
+        return new ResponseEntity<>(userService.updateManager(managerUpdateDto,false), HttpStatus.OK);
     }
 }

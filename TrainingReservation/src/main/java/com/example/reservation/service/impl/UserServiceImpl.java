@@ -77,11 +77,17 @@ public class UserServiceImpl implements UserService {
         }
         throw new RuntimeException("Client not found");
     }
-/*
+
     @Override
-    public ManagerDto updateManager(ManagerDto managerDto) {
-        return null;
+    public ManagerDto updateManager(ManagerUpdateDto managerUpdateDto, boolean isAdmin) {
+        User user = userRepository.findByUsername(managerUpdateDto.getOldUsername()).orElseThrow(() -> new RuntimeException("Manager not found"));
+        if(user instanceof Manager manager){
+            manager = managerMapper.managerUpdateDtoToManager(manager, managerUpdateDto,false);
+            userRepository.save(manager);
+            return managerMapper.managerToManagerDto(manager);
+        }
+        throw new RuntimeException("Manager not found");
     }
-*/
+
 
 }

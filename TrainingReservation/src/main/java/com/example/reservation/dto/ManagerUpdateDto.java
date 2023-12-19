@@ -10,7 +10,7 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ClientUpdateDto {
+public class ManagerUpdateDto {
 
     private String oldUsername;
     private String email;
