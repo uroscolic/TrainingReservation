@@ -6,7 +6,7 @@ public class ClientDto extends UserDto{
         super();
     }
 
-    public ClientDto(String firstName, String lastName, String username, String password, String email) {
-        super(firstName, lastName, username, password, email);
+    public ClientDto(String firstName, String lastName, String username, String email) {
+        super(firstName, lastName, username, email);
     }
 }
