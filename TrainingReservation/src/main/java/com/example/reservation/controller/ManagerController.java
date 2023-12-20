@@ -3,6 +3,7 @@ package com.example.reservation.controller;
 import com.example.reservation.domain.RoleType;
 import com.example.reservation.dto.*;
 import com.example.reservation.service.UserService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,11 +25,11 @@ public class ManagerController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<ManagerDto> saveManager(@RequestBody ManagerCreateDto managerCreateDto) {
+    public ResponseEntity<ManagerDto> saveManager(@RequestBody @Valid ManagerCreateDto managerCreateDto) {
         return new ResponseEntity<>(userService.registerManager(managerCreateDto), HttpStatus.CREATED);
     }
     @PutMapping("/modify")
-    public ResponseEntity<ManagerDto> updateManager(@RequestBody ManagerUpdateDto managerUpdateDto) {
+    public ResponseEntity<ManagerDto> updateManager(@RequestBody @Valid ManagerUpdateDto managerUpdateDto) {
         return new ResponseEntity<>(userService.updateManager(managerUpdateDto), HttpStatus.OK);
     }
     @PutMapping("/ban")

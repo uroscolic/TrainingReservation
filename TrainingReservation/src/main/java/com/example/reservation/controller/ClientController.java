@@ -3,6 +3,7 @@ package com.example.reservation.controller;
 import com.example.reservation.domain.RoleType;
 import com.example.reservation.dto.*;
 import com.example.reservation.service.UserService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -29,13 +30,13 @@ public class ClientController {
 
 
     @PostMapping("/register")
-    public ResponseEntity<ClientDto> saveClient(@RequestBody ClientCreateDto clientCreateDto) {
+    public ResponseEntity<ClientDto> saveClient(@RequestBody @Valid ClientCreateDto clientCreateDto) {
         return new ResponseEntity<>(userService.registerClient(clientCreateDto), HttpStatus.CREATED);
     }
 
     //TODO: add admin check
     @PutMapping("/modify")
-    public ResponseEntity<ClientDto> updateClient(@RequestBody ClientUpdateDto clientUpdateDto) {
+    public ResponseEntity<ClientDto> updateClient(@RequestBody @Valid ClientUpdateDto clientUpdateDto) {
         return new ResponseEntity<>(userService.updateClient(clientUpdateDto), HttpStatus.OK);
     }
     @PutMapping("/ban")
