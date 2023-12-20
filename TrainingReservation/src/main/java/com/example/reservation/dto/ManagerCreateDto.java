@@ -1,5 +1,6 @@
 package com.example.reservation.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,7 +9,10 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public class ManagerCreateDto extends UserCreateDto{
+
+    @NotBlank
     private String nameOfGym;
+    @NotBlank
     private LocalDate dateOfEmployment;
 
     public ManagerCreateDto() {
