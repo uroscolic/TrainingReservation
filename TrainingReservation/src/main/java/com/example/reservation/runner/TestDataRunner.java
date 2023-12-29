@@ -52,7 +52,7 @@ public class TestDataRunner implements CommandLineRunner {
         client.setRole(clientRole);
         client.setCardNumber(123456789L);
         client.setNumberOfTrainings(0);
-        client.setBlocked(false);
+        client.setBanned(false);
         client.setActivated(true);
         userRepository.save(client);
 
@@ -63,7 +63,7 @@ public class TestDataRunner implements CommandLineRunner {
         manager.setEmail("milisav@milisav.com");
         manager.setPassword("1111");
         manager.setRole(managerRole);
-        manager.setBlocked(false);
+        manager.setBanned(false);
         manager.setNameOfGym("Gym1");
         manager.setDateOfEmployment(java.time.LocalDate.now());
         manager.setActivated(true);

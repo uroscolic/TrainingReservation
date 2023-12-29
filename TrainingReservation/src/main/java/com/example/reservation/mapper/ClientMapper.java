@@ -14,7 +14,6 @@ public class ClientMapper {
 
     private static long number = 0;
     private RoleRepository roleRepository;
-
     public ClientMapper(RoleRepository roleRepository) {
         this.roleRepository = roleRepository;
     }
@@ -27,6 +26,7 @@ public class ClientMapper {
         clientDto.setUsername(client.getUsername());
         clientDto.setEmail(client.getEmail());
         clientDto.setId(client.getId());
+        clientDto.setNumberOfTrainings(client.getNumberOfTrainings());
         return clientDto;
     }
 
@@ -39,7 +39,7 @@ public class ClientMapper {
         client.setEmail(clientCreateDto.getEmail());
         client.setPassword(clientCreateDto.getPassword());
         client.setRole(roleRepository.findRoleByRoleType(RoleType.ROLE_CLIENT).get());
-        client.setBlocked(false);
+        client.setBanned(false);
         client.setNumberOfTrainings(0);
         client.setCardNumber(++number);
 
@@ -63,7 +63,7 @@ public class ClientMapper {
     }
     public Client clientBanDtoToClient(Client client, ClientBanDto clientBanDto)
     {
-        client.setBlocked(clientBanDto.isBlocked());
+        client.setBanned(clientBanDto.isBanned());
         return client;
     }
 

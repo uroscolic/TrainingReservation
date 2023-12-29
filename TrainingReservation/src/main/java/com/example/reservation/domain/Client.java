@@ -15,7 +15,7 @@ public class Client extends User{
 
     private Long cardNumber;
     private int numberOfTrainings;
-    private boolean isBlocked;
+    private boolean isBanned;
     private boolean isActivated;
     public Client() {
         super();
@@ -25,7 +25,7 @@ public class Client extends User{
         super(id, name, surname, username, password, email, dateOfBirth, role);
         this.cardNumber = cardNumber;
         this.numberOfTrainings = numberOfTrainings;
-        this.isBlocked = false;
+        this.isBanned = false;
         this.isActivated = false;
     }
 }

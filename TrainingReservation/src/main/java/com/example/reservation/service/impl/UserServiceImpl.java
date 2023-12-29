@@ -10,7 +10,10 @@ import com.example.reservation.mapper.ClientMapper;
 import com.example.reservation.mapper.ManagerMapper;
 import com.example.reservation.mapper.UserMapper;
 import com.example.reservation.repository.UserRepository;
+import com.example.reservation.security.service.TokenService;
 import com.example.reservation.service.UserService;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,6 +34,8 @@ public class UserServiceImpl implements UserService {
     private ManagerMapper managerMapper;
     private UserMapper userMapper;
     private UserRepository userRepository;
+    private TokenService tokenService;
+
     @Override
     public Page<UserDto> findAll(Pageable pageable) {
         return userRepository.findAll(pageable).map(userMapper::userToUserDto);
@@ -42,7 +47,6 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByRoleType(roleType,pageable).map(userMapper::userToUserDto);
 
     }
-
     @Override
     public ClientDto registerClient(ClientCreateDto clientCreateDto) {
         Client client = clientMapper.clientCreateDtoToClient(clientCreateDto);
@@ -50,7 +54,6 @@ public class UserServiceImpl implements UserService {
         return clientMapper.clientToClientDto(client);
 
     }
-
     @Override
     public ManagerDto registerManager(ManagerCreateDto managerCreateDto) {
         Manager manager = managerMapper.managerCreateDtoToManager(managerCreateDto);
@@ -58,7 +61,6 @@ public class UserServiceImpl implements UserService {
         return managerMapper.managerToManagerDto(manager);
 
     }
-
     @Override
     public ClientDto updateClient(ClientUpdateDto clientUpdateDto) {
         User user = userRepository.findByUsername(clientUpdateDto.getOldUsername()).orElseThrow(() -> new RuntimeException("Client not found"));
@@ -69,7 +71,6 @@ public class UserServiceImpl implements UserService {
         }
         throw new RuntimeException("Client not found");
     }
-
     @Override
     public ManagerDto updateManager(ManagerUpdateDto managerUpdateDto) {
         User user = userRepository.findByUsername(managerUpdateDto.getOldUsername()).orElseThrow(() -> new RuntimeException("Manager not found"));
@@ -80,7 +81,6 @@ public class UserServiceImpl implements UserService {
         }
         throw new RuntimeException("Manager not found");
     }
-
     @Override
     public ClientDto banClient(ClientBanDto clientBanDto) {
         User user = userRepository.findByUsername(clientBanDto.getUsername()).orElseThrow(() -> new RuntimeException("Client not found"));
@@ -91,7 +91,6 @@ public class UserServiceImpl implements UserService {
         }
         throw new RuntimeException("Client not found");
     }
-
     @Override
     public ManagerDto banManager(ManagerBanDto managerBanDto) {
         User user = userRepository.findByUsername(managerBanDto.getUsername()).orElseThrow(() -> new RuntimeException("Manager not found"));
@@ -101,6 +100,41 @@ public class UserServiceImpl implements UserService {
             return managerMapper.managerToManagerDto(manager);
         }
         throw new RuntimeException("Manager not found");
+    }
+
+    @Override
+    public TokenResponseDto login(TokenRequestDto tokenRequestDto) {
+        //Try to find active user for specified credentials
+        User user = userRepository
+                .findByEmailAndPassword(tokenRequestDto.getEmail(), tokenRequestDto.getPassword())
+                .orElseThrow(() -> new RuntimeException(String
+                        .format("User with username: %s and password: %s not found.", tokenRequestDto.getEmail(),
+                                tokenRequestDto.getPassword())));
+        //Create token payload
+        Claims claims = Jwts.claims();
+        claims.put("id", user.getId());
+        claims.put("role", user.getRole().getRoleType());
+        //Generate token
+        if(user instanceof Client client && client.isBanned()){
+            throw new RuntimeException("Client is banned");
+        }
+        if(user instanceof Manager manager && manager.isBanned()){
+            throw new RuntimeException("Manager is banned");
+        }
+        return new TokenResponseDto(tokenService.generate(claims));
+    }
+
+    @Override
+    public void incrementReservationCount(IncrementReservationCountDto incrementReservationCountDto) {
+        User user = userRepository.findById(incrementReservationCountDto.getUserId())
+                    .orElseThrow(() -> new RuntimeException("User not found"));
+        if(user instanceof Client client){
+            client.setNumberOfTrainings(client.getNumberOfTrainings() + 1);
+            userRepository.save(client);
+        }
+        else{
+            throw new RuntimeException("User not found");
+        }
     }
 
 

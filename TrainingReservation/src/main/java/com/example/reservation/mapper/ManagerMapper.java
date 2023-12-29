@@ -1,6 +1,5 @@
 package com.example.reservation.mapper;
 
-import com.example.reservation.domain.Client;
 import com.example.reservation.domain.Manager;
 import com.example.reservation.domain.RoleType;
 import com.example.reservation.dto.*;
@@ -38,7 +37,7 @@ public class ManagerMapper {
         manager.setNameOfGym(managerCreateDto.getNameOfGym());
         manager.setDateOfEmployment(managerCreateDto.getDateOfEmployment());
         manager.setRole(roleRepository.findRoleByRoleType(RoleType.ROLE_MANAGER).get());
-        manager.setBlocked(false);
+        manager.setBanned(false);
         return manager;
     }
 
@@ -58,7 +57,7 @@ public class ManagerMapper {
     }
     public Manager managerBanDtoToManager(Manager manager, ManagerBanDto managerBanDto)
     {
-        manager.setBlocked(managerBanDto.isBlocked());
+        manager.setBanned(managerBanDto.isBanned());
         return manager;
     }
 }

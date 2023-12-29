@@ -1,6 +1,7 @@
 package com.example.reservation.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,7 +13,7 @@ public class ManagerCreateDto extends UserCreateDto{
 
     @NotBlank
     private String nameOfGym;
-    @NotBlank
+    @NotNull
     private LocalDate dateOfEmployment;
 
     public ManagerCreateDto() {

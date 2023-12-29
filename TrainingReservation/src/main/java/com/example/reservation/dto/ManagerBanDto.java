@@ -12,6 +12,6 @@ import lombok.Setter;
 public class ManagerBanDto {
 
     private String username;
-    private boolean blocked;
+    private boolean banned;
 
 }

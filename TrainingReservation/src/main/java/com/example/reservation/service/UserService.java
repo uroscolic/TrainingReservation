@@ -15,4 +15,6 @@ public interface UserService {
     ManagerDto updateManager(ManagerUpdateDto managerUpdateDto);
     ClientDto banClient(ClientBanDto clientBanDto);
     ManagerDto banManager(ManagerBanDto managerBanDto);
+    TokenResponseDto login(TokenRequestDto tokenRequestDto);
+    void incrementReservationCount(IncrementReservationCountDto incrementReservationCountDto);
 }

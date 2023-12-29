@@ -2,7 +2,10 @@ package com.example.reservation.controller;
 
 import com.example.reservation.domain.RoleType;
 import com.example.reservation.dto.*;
+import com.example.reservation.security.CheckSecurity;
+import com.example.reservation.security.service.TokenService;
 import com.example.reservation.service.UserService;
+import io.jsonwebtoken.Claims;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -18,13 +21,16 @@ import org.springframework.data.domain.Pageable;
 public class ClientController {
 
     private UserService userService;
+    private TokenService tokenService;
 
 
     // TODO: authorization
 
     @GetMapping
-    public ResponseEntity<Page<UserDto>> getAllClients(String authorization,
+    @CheckSecurity(roles = {"ROLE_ADMIN", "ROLE_MANAGER"})
+    public ResponseEntity<Page<UserDto>> getAllClients(@RequestHeader("Authorization") String authorization,
                                                        Pageable pageable) {
+        System.out.println("authorization: " + authorization);
         return new ResponseEntity<>(userService.findAllOfRole(pageable, RoleType.ROLE_CLIENT), HttpStatus.OK);
     }
 
@@ -35,12 +41,21 @@ public class ClientController {
     }
 
     //TODO: add admin check
+    @CheckSecurity(roles = {"ROLE_CLIENT" , "ROLE_ADMIN"})
     @PutMapping("/modify")
-    public ResponseEntity<ClientDto> updateClient(@RequestBody @Valid ClientUpdateDto clientUpdateDto) {
+    public ResponseEntity<ClientDto> updateClient(@RequestHeader("Authorization") String authorization,
+                                                  @RequestBody @Valid ClientUpdateDto clientUpdateDto) {
+        Claims claims = tokenService.parseToken(authorization.split(" ")[1]);
+        System.out.println(claims);
+        if(claims.get("role").equals("ROLE_CLIENT") && Long.parseLong(claims.get("id").toString()) != clientUpdateDto.getId())
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         return new ResponseEntity<>(userService.updateClient(clientUpdateDto), HttpStatus.OK);
     }
     @PutMapping("/ban")
-    public ResponseEntity<ClientDto> banClient(@RequestBody ClientBanDto clientBanDto) {
+    @CheckSecurity(roles = {"ROLE_ADMIN"})
+    public ResponseEntity<ClientDto> banClient(@RequestHeader("Authorization") String authorization,
+                                               @RequestBody ClientBanDto clientBanDto) {
         return new ResponseEntity<>(userService.banClient(clientBanDto), HttpStatus.OK);
     }
+
 }

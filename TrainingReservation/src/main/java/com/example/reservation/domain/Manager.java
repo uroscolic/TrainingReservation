@@ -13,7 +13,7 @@ public class Manager extends User{
 
     private String nameOfGym;
     private LocalDate dateOfEmployment;
-    private boolean isBlocked;
+    private boolean isBanned;
     private boolean isActivated;
 
     public Manager() {
@@ -23,7 +23,7 @@ public class Manager extends User{
         super(id, name, surname, username, password, email, dateOfBirth, role);
         this.nameOfGym = nameOfGym;
         this.dateOfEmployment = dateOfEmployment;
-        this.isBlocked = false;
+        this.isBanned = false;
         this.isActivated = false;
     }
 }

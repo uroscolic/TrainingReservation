@@ -7,11 +7,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
-public class ClientBanDto {
+@NoArgsConstructor
+public class IncrementReservationCountDto {
 
-    private String username;
-    private boolean banned;
-
+    private Long userId;
 }
