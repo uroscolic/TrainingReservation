@@ -8,7 +8,10 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Entity
-@Table(name = "useraccount")
+@Table(name = "useraccount", uniqueConstraints = {
+        @UniqueConstraint(columnNames = "username"),
+        @UniqueConstraint(columnNames = "email")
+})
 @Inheritance (strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn (discriminatorType = DiscriminatorType.STRING,
 name = "UserType")

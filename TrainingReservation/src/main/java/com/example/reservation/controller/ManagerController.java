@@ -30,6 +30,7 @@ public class ManagerController {
     }
 
     @PostMapping("/register")
+    @CheckSecurity(roles = {"ROLE_ADMIN"})
     public ResponseEntity<ManagerDto> saveManager(@RequestBody @Valid ManagerCreateDto managerCreateDto) {
         return new ResponseEntity<>(userService.registerManager(managerCreateDto), HttpStatus.CREATED);
     }
