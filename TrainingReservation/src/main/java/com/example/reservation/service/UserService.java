@@ -5,9 +5,12 @@ import com.example.reservation.dto.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.Optional;
+
 public interface UserService {
 
     Page<UserDto> findAll(Pageable pageable);
+    ClientDto findClientById(Long id);
     Page<UserDto> findAllOfRole(Pageable pageable, RoleType roleType);
     ClientDto registerClient(ClientCreateDto clientDto);
     ManagerDto registerManager(ManagerCreateDto managerDto);
@@ -17,4 +20,5 @@ public interface UserService {
     ManagerDto banManager(ManagerBanDto managerBanDto);
     TokenResponseDto login(TokenRequestDto tokenRequestDto);
     void incrementReservationCount(IncrementReservationCountDto incrementReservationCountDto);
+    void decrementReservationCount(DecrementReservationCountDto decrementReservationCountDto);
 }

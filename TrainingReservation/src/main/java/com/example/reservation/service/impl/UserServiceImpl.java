@@ -22,6 +22,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -39,6 +41,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public Page<UserDto> findAll(Pageable pageable) {
         return userRepository.findAll(pageable).map(userMapper::userToUserDto);
+    }
+
+    @Override
+    public ClientDto findClientById(Long id) {
+        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("Client not found"));
+        if(user instanceof Client client){
+            return clientMapper.clientToClientDto(client);
+        }
+        throw new RuntimeException("Client not found");
     }
 
     @Override
@@ -127,13 +138,26 @@ public class UserServiceImpl implements UserService {
     @Override
     public void incrementReservationCount(IncrementReservationCountDto incrementReservationCountDto) {
         User user = userRepository.findById(incrementReservationCountDto.getUserId())
-                    .orElseThrow(() -> new RuntimeException("User not found"));
+                    .orElseThrow(() -> new RuntimeException("Client not found"));
         if(user instanceof Client client){
             client.setNumberOfTrainings(client.getNumberOfTrainings() + 1);
             userRepository.save(client);
         }
         else{
-            throw new RuntimeException("User not found");
+            throw new RuntimeException("Client not found");
+        }
+    }
+
+    @Override
+    public void decrementReservationCount(DecrementReservationCountDto decrementReservationCountDto) {
+        User user = userRepository.findById(decrementReservationCountDto.getUserId())
+                .orElseThrow(() -> new RuntimeException("Client not found"));
+        if(user instanceof Client client){
+            client.setNumberOfTrainings(client.getNumberOfTrainings() - 1);
+            userRepository.save(client);
+        }
+        else{
+            throw new RuntimeException("Client not found");
         }
     }
 

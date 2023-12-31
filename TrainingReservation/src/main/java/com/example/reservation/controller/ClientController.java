@@ -33,7 +33,14 @@ public class ClientController {
         System.out.println("authorization: " + authorization);
         return new ResponseEntity<>(userService.findAllOfRole(pageable, RoleType.ROLE_CLIENT), HttpStatus.OK);
     }
-
+    @GetMapping("/{id}")
+    public ResponseEntity<ClientDto> getClient(/*@RequestHeader("Authorization") String authorization,*/
+                                                @PathVariable("id") Long id) {
+        /*Claims claims = tokenService.parseToken(authorization.split(" ")[1]);
+        if(claims.get("role").equals("ROLE_CLIENT") && Long.parseLong(claims.get("id").toString()) != id)
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);*/
+        return new ResponseEntity<>(userService.findClientById(id), HttpStatus.OK);
+    }
 
     @PostMapping("/register")
     public ResponseEntity<ClientDto> saveClient(@RequestBody @Valid ClientCreateDto clientCreateDto) {

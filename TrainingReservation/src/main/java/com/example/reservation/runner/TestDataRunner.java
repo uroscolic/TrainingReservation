@@ -56,6 +56,19 @@ public class TestDataRunner implements CommandLineRunner {
         client.setActivated(true);
         userRepository.save(client);
 
+        Client client1 = new Client();
+        client1.setFirstName("NPC");
+        client1.setLastName("FinalBoss");
+        client1.setUsername("npc");
+        client1.setEmail("npc@npc");
+        client1.setPassword("1111");
+        client1.setRole(clientRole);
+        client1.setCardNumber(123456789L);
+        client1.setNumberOfTrainings(10);
+        client1.setBanned(false);
+        client1.setActivated(true);
+        userRepository.save(client1);
+
         Manager manager = new Manager();
         manager.setFirstName("Milisav");
         manager.setLastName("Colic");
