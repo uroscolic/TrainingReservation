@@ -28,6 +28,10 @@ public class ManagerController {
 
         return new ResponseEntity<>(userService.findAllOfRole(pageable, RoleType.ROLE_MANAGER), HttpStatus.OK);
     }
+    @GetMapping("/{id}")
+    public ResponseEntity<ManagerDto> getManager(@PathVariable("id") Long id) {
+        return new ResponseEntity<>(userService.findManagerById(id), HttpStatus.OK);
+    }
 
     @PostMapping("/register")
     @CheckSecurity(roles = {"ROLE_ADMIN"})

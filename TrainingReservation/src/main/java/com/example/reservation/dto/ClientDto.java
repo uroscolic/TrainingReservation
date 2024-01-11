@@ -12,7 +12,7 @@ public class ClientDto extends UserDto{
         super();
     }
 
-    public ClientDto(String firstName, String lastName, String username, String email) {
-        super(firstName, lastName, username, email);
+    public ClientDto(String firstName, String lastName, String username, String email, boolean banned, String role) {
+        super(firstName, lastName, username, email, banned, role);
     }
 }

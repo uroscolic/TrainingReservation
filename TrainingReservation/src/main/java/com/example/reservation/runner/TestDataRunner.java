@@ -44,10 +44,10 @@ public class TestDataRunner implements CommandLineRunner {
         userRepository.save(admin1);
 
         Client client = new Client();
-        client.setFirstName("Violeta");
-        client.setLastName("Colic");
-        client.setUsername("violeta");
-        client.setEmail("violeta@violeta.com");
+        client.setFirstName("Uros");
+        client.setLastName("Uros");
+        client.setUsername("uros");
+        client.setEmail("ucolic3021rn@raf.rs");
         client.setPassword("1111");
         client.setRole(clientRole);
         client.setCardNumber(123456789L);
@@ -60,26 +60,38 @@ public class TestDataRunner implements CommandLineRunner {
         client1.setFirstName("NPC");
         client1.setLastName("FinalBoss");
         client1.setUsername("npc");
-        client1.setEmail("npc@npc");
+        client1.setEmail("dcolic3121rn@raf.rs");
         client1.setPassword("1111");
         client1.setRole(clientRole);
-        client1.setCardNumber(123456789L);
+        client1.setCardNumber(1234567890L);
         client1.setNumberOfTrainings(10);
         client1.setBanned(false);
         client1.setActivated(true);
         userRepository.save(client1);
 
+        Client client2 = new Client();
+        client2.setFirstName("a");
+        client2.setLastName("a");
+        client2.setUsername("a");
+        client2.setEmail("a");
+        client2.setPassword("a");
+        client2.setRole(clientRole);
+        client2.setCardNumber(12345675890L);
+        client2.setNumberOfTrainings(4);
+        client2.setBanned(false);
+        client2.setActivated(true);
+        userRepository.save(client2);
+
         Manager manager = new Manager();
-        manager.setFirstName("Milisav");
-        manager.setLastName("Colic");
-        manager.setUsername("milisav");
-        manager.setEmail("milisav@milisav.com");
+        manager.setFirstName("Dusan");
+        manager.setLastName("Dusan");
+        manager.setUsername("dusan");
+        manager.setEmail("dusancolic12@gmail.com");
         manager.setPassword("1111");
         manager.setRole(managerRole);
         manager.setBanned(false);
         manager.setNameOfGym("Gym1");
         manager.setDateOfEmployment(java.time.LocalDate.now());
-        manager.setActivated(true);
         userRepository.save(manager);
 
     }

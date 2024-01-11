@@ -1,6 +1,8 @@
 package com.example.reservation.mapper;
 
+import com.example.reservation.domain.Admin;
 import com.example.reservation.domain.Client;
+import com.example.reservation.domain.Manager;
 import com.example.reservation.domain.User;
 import com.example.reservation.dto.ClientDto;
 import com.example.reservation.dto.UserDto;
@@ -22,6 +24,21 @@ public class UserMapper {
         userDto.setUsername(user.getUsername());
         userDto.setEmail(user.getEmail());
         userDto.setId(user.getId());
+        if(user instanceof Client client)
+        {
+            userDto.setRole("ROLE_CLIENT");
+            userDto.setBanned(client.isBanned());
+        }
+        else if(user instanceof Admin)
+        {
+            userDto.setRole("ROLE_ADMIN");
+            userDto.setBanned(false);
+        }
+        else
+        {
+            userDto.setRole("ROLE_MANAGER");
+            userDto.setBanned(((Manager)user).isBanned());
+        }
         return userDto;
     }
 

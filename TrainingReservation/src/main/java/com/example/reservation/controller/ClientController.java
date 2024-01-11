@@ -34,11 +34,7 @@ public class ClientController {
         return new ResponseEntity<>(userService.findAllOfRole(pageable, RoleType.ROLE_CLIENT), HttpStatus.OK);
     }
     @GetMapping("/{id}")
-    public ResponseEntity<ClientDto> getClient(/*@RequestHeader("Authorization") String authorization,*/
-                                                @PathVariable("id") Long id) {
-        /*Claims claims = tokenService.parseToken(authorization.split(" ")[1]);
-        if(claims.get("role").equals("ROLE_CLIENT") && Long.parseLong(claims.get("id").toString()) != id)
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);*/
+    public ResponseEntity<ClientDto> getClient(@PathVariable("id") Long id) {
         return new ResponseEntity<>(userService.findClientById(id), HttpStatus.OK);
     }
 
@@ -63,6 +59,10 @@ public class ClientController {
     public ResponseEntity<ClientDto> banClient(@RequestHeader("Authorization") String authorization,
                                                @RequestBody ClientBanDto clientBanDto) {
         return new ResponseEntity<>(userService.banClient(clientBanDto), HttpStatus.OK);
+    }
+    @PostMapping("/activate/{string}")
+    public void activateClient(@PathVariable String string) {
+        userService.activateClient(string);
     }
 
 }

@@ -13,8 +13,8 @@ public class ManagerDto extends UserDto{
     public ManagerDto() {
         super();
     }
-    public ManagerDto(String nameOfGym, String firstName, String lastName, String username, String email) {
-        super(firstName, lastName, username, email);
+    public ManagerDto(String firstName, String lastName, String username, String email, boolean banned, String role, String nameOfGym) {
+        super(firstName, lastName, username, email, banned, role);
         this.nameOfGym = nameOfGym;
     }
 }

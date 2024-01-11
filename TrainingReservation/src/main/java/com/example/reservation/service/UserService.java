@@ -11,6 +11,7 @@ public interface UserService {
 
     Page<UserDto> findAll(Pageable pageable);
     ClientDto findClientById(Long id);
+    ManagerDto findManagerById(Long id);
     Page<UserDto> findAllOfRole(Pageable pageable, RoleType roleType);
     ClientDto registerClient(ClientCreateDto clientDto);
     ManagerDto registerManager(ManagerCreateDto managerDto);
@@ -21,4 +22,5 @@ public interface UserService {
     TokenResponseDto login(TokenRequestDto tokenRequestDto);
     void incrementReservationCount(IncrementReservationCountDto incrementReservationCountDto);
     void decrementReservationCount(DecrementReservationCountDto decrementReservationCountDto);
+    void activateClient(String activationCode);
 }

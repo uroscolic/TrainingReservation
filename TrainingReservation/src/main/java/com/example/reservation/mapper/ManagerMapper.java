@@ -34,6 +34,7 @@ public class ManagerMapper {
         manager.setUsername(managerCreateDto.getUsername());
         manager.setEmail(managerCreateDto.getEmail());
         manager.setPassword(managerCreateDto.getPassword());
+        manager.setDateOfBirth(managerCreateDto.getDateOfBirth());
         manager.setNameOfGym(managerCreateDto.getNameOfGym());
         manager.setDateOfEmployment(managerCreateDto.getDateOfEmployment());
         manager.setRole(roleRepository.findRoleByRoleType(RoleType.ROLE_MANAGER).get());

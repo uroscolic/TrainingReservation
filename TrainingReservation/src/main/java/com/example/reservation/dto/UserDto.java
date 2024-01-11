@@ -12,14 +12,18 @@ public class UserDto {
     private String firstName;
     private String lastName;
     private String username;
+    private boolean banned;
+    private String role;
 
     public UserDto() {
     }
-    public UserDto(String firstName, String lastName, String username, String email) {
+    public UserDto(String firstName, String lastName, String username, String email, boolean banned, String role) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
         this.email = email;
+        this.banned = banned;
+        this.role = role;
 
     }
 }

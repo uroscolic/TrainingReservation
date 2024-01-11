@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.Random;
+
 @Getter
 @Setter
 @Entity
@@ -46,6 +48,8 @@ public class User {
     private LocalDate dateOfBirth;
     @ManyToOne(optional = false)
     private Role role;
+    private String activationCode;
+
 
     public User(Long id, String firstName, String lastName, String username, String password, String email, LocalDate dateOfBirth, Role role) {
         this.id = id;

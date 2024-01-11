@@ -5,28 +5,33 @@ import com.example.reservation.domain.Manager;
 import com.example.reservation.domain.RoleType;
 import com.example.reservation.domain.User;
 import com.example.reservation.dto.*;
+import com.example.reservation.listener.MessageHelper;
 import com.example.reservation.mapper.AdminMapper;
 import com.example.reservation.mapper.ClientMapper;
 import com.example.reservation.mapper.ManagerMapper;
 import com.example.reservation.mapper.UserMapper;
+import com.example.reservation.notificationService.EmailDto;
 import com.example.reservation.repository.UserRepository;
 import com.example.reservation.security.service.TokenService;
 import com.example.reservation.service.UserService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import jakarta.transaction.Transactional;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 
 @Getter
 @Setter
-@AllArgsConstructor
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
@@ -37,6 +42,25 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
     private UserRepository userRepository;
     private TokenService tokenService;
+    private JmsTemplate jmsTemplate;
+    private String emailDestination;
+    private MessageHelper messageHelper;
+
+    public UserServiceImpl(ClientMapper clientMapper, AdminMapper adminMapper, ManagerMapper managerMapper,
+                           UserMapper userMapper, UserRepository userRepository, TokenService tokenService,
+                           JmsTemplate jmsTemplate,
+                           @Value("${destination.sendEmails}") String emailDestination,
+                           MessageHelper messageHelper) {
+        this.clientMapper = clientMapper;
+        this.adminMapper = adminMapper;
+        this.managerMapper = managerMapper;
+        this.userMapper = userMapper;
+        this.userRepository = userRepository;
+        this.tokenService = tokenService;
+        this.jmsTemplate = jmsTemplate;
+        this.emailDestination = emailDestination;
+        this.messageHelper = messageHelper;
+    }
 
     @Override
     public Page<UserDto> findAll(Pageable pageable) {
@@ -53,6 +77,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public ManagerDto findManagerById(Long id) {
+        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("Manager not found"));
+        if(user instanceof Manager manager){
+            return managerMapper.managerToManagerDto(manager);
+        }
+        throw new RuntimeException("Client not found");
+    }
+
+    @Override
     public Page<UserDto> findAllOfRole(Pageable pageable, RoleType roleType) {
 
         return userRepository.findByRoleType(roleType,pageable).map(userMapper::userToUserDto);
@@ -60,8 +93,23 @@ public class UserServiceImpl implements UserService {
     }
     @Override
     public ClientDto registerClient(ClientCreateDto clientCreateDto) {
+        String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
         Client client = clientMapper.clientCreateDtoToClient(clientCreateDto);
+        Random random = new Random();
+        StringBuilder sb = new StringBuilder(32);
+        for (int i = 0; i < 32; i++) {
+            int randomIndex = random.nextInt(CHARACTERS.length());
+            sb.append(CHARACTERS.charAt(randomIndex));
+        }
+        client.setActivationCode(sb.toString());
         userRepository.save(client);
+        List<String> params = new ArrayList<>();
+        params.add(client.getFirstName());
+        params.add(client.getLastName());
+        params.add("http://localhost:8080/client/activate/" + client.getActivationCode());
+
+        //jmsTemplate.convertAndSend(emailDestination, messageHelper.createTextMessage(new EmailDto(client.getEmail(), "activation", params)));
         return clientMapper.clientToClientDto(client);
 
     }
@@ -125,9 +173,13 @@ public class UserServiceImpl implements UserService {
         Claims claims = Jwts.claims();
         claims.put("id", user.getId());
         claims.put("role", user.getRole().getRoleType());
+        claims.put("email", user.getEmail());
         //Generate token
         if(user instanceof Client client && client.isBanned()){
             throw new RuntimeException("Client is banned");
+        }
+        if (user instanceof Client client && !client.isActivated()) {
+            throw new RuntimeException("Client is not activated");
         }
         if(user instanceof Manager manager && manager.isBanned()){
             throw new RuntimeException("Manager is banned");
@@ -154,6 +206,18 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new RuntimeException("Client not found"));
         if(user instanceof Client client){
             client.setNumberOfTrainings(client.getNumberOfTrainings() - 1);
+            userRepository.save(client);
+        }
+        else{
+            throw new RuntimeException("Client not found");
+        }
+    }
+
+    @Override
+    public void activateClient(String activationCode) {
+        User user = userRepository.findByActivationCode(activationCode).orElseThrow(() -> new RuntimeException("Client not found"));
+        if(user instanceof Client client){
+            client.setActivated(true);
             userRepository.save(client);
         }
         else{

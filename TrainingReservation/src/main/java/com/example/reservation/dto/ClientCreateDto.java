@@ -12,6 +12,6 @@ public class ClientCreateDto extends UserCreateDto{
         super();
     }
     public ClientCreateDto(String firstName, String lastName, String username, String password, String email, LocalDate dateOfBirth) {
-        super(firstName, lastName, username, password, email,dateOfBirth);
+        super(firstName, lastName, username, password, email, dateOfBirth);
     }
 }

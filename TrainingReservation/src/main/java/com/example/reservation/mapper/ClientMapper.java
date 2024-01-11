@@ -38,6 +38,7 @@ public class ClientMapper {
         client.setUsername(clientCreateDto.getUsername());
         client.setEmail(clientCreateDto.getEmail());
         client.setPassword(clientCreateDto.getPassword());
+        client.setDateOfBirth(clientCreateDto.getDateOfBirth());
         client.setRole(roleRepository.findRoleByRoleType(RoleType.ROLE_CLIENT).get());
         client.setBanned(false);
         client.setNumberOfTrainings(0);

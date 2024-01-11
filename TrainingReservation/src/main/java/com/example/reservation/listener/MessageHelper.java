@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-//@Component
+@Component
 public class MessageHelper {
 
     private Validator validator;
