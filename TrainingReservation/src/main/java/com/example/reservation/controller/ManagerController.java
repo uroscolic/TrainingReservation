@@ -14,6 +14,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RestController
 @RequestMapping("/manager")
 @AllArgsConstructor
@@ -22,11 +25,12 @@ public class ManagerController {
     private TokenService tokenService;
 
     @GetMapping
-    @CheckSecurity(roles = {"ROLE_ADMIN"})
-    public ResponseEntity<Page<UserDto>> getAllManagers(@RequestHeader("Authorization") String authorization,
-                                                        Pageable pageable) {
+    public ResponseEntity<List<UserDto>> getAllManagers(Pageable pageable) {
 
-        return new ResponseEntity<>(userService.findAllOfRole(pageable, RoleType.ROLE_MANAGER), HttpStatus.OK);
+        List<UserDto> managers = new ArrayList<>();
+        for(UserDto userDto : userService.findAllOfRole(pageable, RoleType.ROLE_MANAGER))
+            managers.add(userDto);
+        return new ResponseEntity<>(managers, HttpStatus.OK);
     }
     @GetMapping("/{id}")
     public ResponseEntity<ManagerDto> getManager(@PathVariable("id") Long id) {

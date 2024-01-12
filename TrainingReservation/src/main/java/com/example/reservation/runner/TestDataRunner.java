@@ -77,7 +77,7 @@ public class TestDataRunner implements CommandLineRunner {
         client2.setPassword("a");
         client2.setRole(clientRole);
         client2.setCardNumber(12345675890L);
-        client2.setNumberOfTrainings(4);
+        client2.setNumberOfTrainings(0);
         client2.setBanned(false);
         client2.setActivated(true);
         userRepository.save(client2);

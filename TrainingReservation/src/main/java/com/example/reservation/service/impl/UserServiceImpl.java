@@ -107,9 +107,9 @@ public class UserServiceImpl implements UserService {
         List<String> params = new ArrayList<>();
         params.add(client.getFirstName());
         params.add(client.getLastName());
-        params.add("http://localhost:8080/client/activate/" + client.getActivationCode());
+        params.add("http://localhost:8080/api/client/activate/" + client.getActivationCode());
 
-        //jmsTemplate.convertAndSend(emailDestination, messageHelper.createTextMessage(new EmailDto(client.getEmail(), "activation", params)));
+        jmsTemplate.convertAndSend(emailDestination, messageHelper.createTextMessage(new EmailDto("activation", client.getEmail(), params)));
         return clientMapper.clientToClientDto(client);
 
     }
@@ -124,8 +124,16 @@ public class UserServiceImpl implements UserService {
     public ClientDto updateClient(ClientUpdateDto clientUpdateDto) {
         User user = userRepository.findByUsername(clientUpdateDto.getOldUsername()).orElseThrow(() -> new RuntimeException("Client not found"));
         if(user instanceof Client client){
+            String password = client.getPassword();
             client = clientMapper.clientUpdateDtoToClient(client, clientUpdateDto);
             userRepository.save(client);
+            if(!password.equals(client.getPassword()))
+            {
+                List<String> params = new ArrayList<>();
+                params.add(client.getFirstName());
+                params.add(client.getLastName());
+                jmsTemplate.convertAndSend(emailDestination, messageHelper.createTextMessage(new EmailDto("passwordChange", client.getEmail(), params)));
+            }
             return clientMapper.clientToClientDto(client);
         }
         throw new RuntimeException("Client not found");

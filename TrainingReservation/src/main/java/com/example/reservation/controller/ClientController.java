@@ -60,7 +60,7 @@ public class ClientController {
                                                @RequestBody ClientBanDto clientBanDto) {
         return new ResponseEntity<>(userService.banClient(clientBanDto), HttpStatus.OK);
     }
-    @PostMapping("/activate/{string}")
+    @GetMapping("/activate/{string}")
     public void activateClient(@PathVariable String string) {
         userService.activateClient(string);
     }
